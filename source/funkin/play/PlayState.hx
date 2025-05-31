@@ -929,7 +929,7 @@ class PlayState extends MusicBeatSubState
         Conductor.instance.formatOffset = 0.0;
       }
 
-      Conductor.instance.update(Conductor.instance.songPosition + elapsed * 1000, false); // Normal conductor update.
+      Conductor.instance.update(Conductor.instance.songPosition + elapsed * 1000 * playbackRate, false); // Normal conductor update.
 
       // If, after updating the conductor, the instrumental has finished, end the song immediately.
       // This helps prevent a major bug where the level suddenly loops back to the start or middle.
@@ -1480,12 +1480,15 @@ class PlayState extends MusicBeatSubState
         }
       }
 
+      final tolerance:Flaot = 100 * playbackRate;
+
       if (!startingSong
-        && (Math.abs(FlxG.sound.music.time - correctSync) > 100
-          || Math.abs(playerVoicesError) > 100
-          || Math.abs(opponentVoicesError) > 100))
+        && (Math.abs(FlxG.sound.music.time - correctSync) > tolerance
+          || Math.abs(playerVoicesError) > tolerance
+          || Math.abs(opponentVoicesError) > tolerance))
       {
         trace("VOCALS NEED RESYNC");
+        trace(tolerance);
         if (vocals != null)
         {
           trace(playerVoicesError);
