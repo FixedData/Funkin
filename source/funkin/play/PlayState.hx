@@ -1480,7 +1480,7 @@ class PlayState extends MusicBeatSubState
         }
       }
 
-      final tolerance:Flaot = 100 * playbackRate;
+      final tolerance:Float = 100 * playbackRate;
 
       if (!startingSong
         && (Math.abs(FlxG.sound.music.time - correctSync) > tolerance
